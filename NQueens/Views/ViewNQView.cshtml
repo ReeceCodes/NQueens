@@ -1,0 +1,51 @@
+﻿@model NQueens.Models.NQ
+
+@if (Model.Solutions != null && Model.Solutions.Count > 0)
+{    
+    <p>iterations: @Model.iterations.ToString()</p>
+    <p>solutions: @Model.Solutions.Count.ToString()</p>
+    
+    foreach (var s in Model.Solutions)
+    {
+        var tmp = s.Split(',');
+
+        <p>@string.Join(",", tmp)</p>
+
+            <table border="1" cellpadding="0" cellspacing="0">
+                @for (int i = 0; i < Model.NumberOfQueens; i++)
+                {
+                    <tr>
+                        @for (int j = 0; j < Model.NumberOfQueens; j++)
+                        {
+                            <td style="border:1px solid white; width:20px; height:20px;">
+                                @if (j == int.Parse(tmp[i]))
+                            {
+                                    <p style="background-color:gold; text-align:center;">x</p>
+                                }
+                                else
+                                {
+                                    <p style="background-color:black;">&nbsp;</p>
+                                }
+
+                            </td>
+                        }
+                    </tr>
+                }
+
+            </table>
+
+        <hr />
+
+        return; //remove this and it will crash after like 10 queens and be unusable because of all the looping
+    }
+}
+else
+{
+    using (Html.BeginUmbracoForm("GetNQNum", "NQueen"))
+    {
+        <div>
+            <input typeof="text" name="numberofqueens" /> &nbsp;<button>Go</button>
+        </div>
+    }
+}
+
